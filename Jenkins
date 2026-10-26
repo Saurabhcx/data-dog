@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/bunnyyy15/data-dog.git',
+                    branch: 'main',
+                    credentialsId: 'Git-saurabh-test'
+            }
+        }
+        
+        stage('SAST Scan - Checkmarx One') {
+            steps {
+             checkmarxASTScanner additionalOptions: '--debug', branchName: 'main', checkmarxInstallation: 'Test IND', credentialsId: '', projectName: 'Saurabhcx/data-dog-jenkins', serverUrl: 'https://ind.ast.checkmarx.net/', tenantName: 'Testing15'
+            }
+        }
+    }
+}
